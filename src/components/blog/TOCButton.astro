@@ -1,0 +1,18 @@
+---
+import MenuIcon from '../icons/MenuIcon.astro';
+---
+
+<button
+  id="tocButton"
+  class="group bg-gradient-to-br from-purple-600 to-indigo-600 p-3 rounded-full shadow-lg hover:shadow-purple-500/25 hover:-translate-y-0.5 transition-all duration-300"
+  aria-label="Table of Contents"
+>
+  <div class="relative">
+    <MenuIcon class="w-6 h-6 text-white" />
+    <span 
+      class="absolute -top-2 -right-2 px-1.5 py-0.5 text-[10px] font-medium bg-white text-purple-600 rounded-full opacity-0 group-hover:opacity-100 transform group-hover:-translate-y-1 transition-all duration-300"
+    >
+      TOC
+    </span>
+  </div>
+</button>

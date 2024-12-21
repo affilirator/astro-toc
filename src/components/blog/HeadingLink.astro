@@ -1,0 +1,28 @@
+---
+interface Props {
+  level: number;
+  text: string;
+  id: string;
+}
+
+const { level, text, id } = Astro.props;
+
+const indentClass = {
+  1: 'ml-0',
+  2: 'ml-4',
+  3: 'ml-8',
+  4: 'ml-12',
+  5: 'ml-16',
+  6: 'ml-20',
+}[level] || 'ml-0';
+---
+
+<li class={`${indentClass} group`}>
+  <a
+    href={`#${id}`}
+    class="flex items-center py-1 text-gray-300 hover:text-white transition-all duration-300"
+  >
+    <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+    <span class="group-hover:translate-x-1 transition-transform duration-300">{text}</span>
+  </a>
+</li>

@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ArticleTOC from '../../components/blog/ArticleTOC.astro';
+import MobileTOC from '../../components/blog/MobileTOC.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title}>
+  <main class="max-w-5xl mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-8">
+      <article class="prose prose-lg mx-auto">
+        <img 
+          src={post.data.image} 
+          alt={post.data.title}
+          class="w-full h-64 object-cover rounded-lg mb-8"
+        />
+        <div class="mb-8">
+          <h1 class="mb-2">{post.data.title}</h1>
+          <div class="flex items-center gap-4 text-gray-600">
+            <span>{post.data.author}</span>
+            <span>•</span>
+            <span>{new Date(post.data.pubDate).toLocaleDateString()}</span>
+            <span>•</span>
+            <span>{post.data.category}</span>
+          </div>
+        </div>
+        <Content />
+      </article>
+      
+      <aside class="hidden lg:block">
+        <ArticleTOC content={post.body} />
+      </aside>
+    </div>
+  </main>
+  
+  <MobileTOC content={post.body} />
+</Layout>

@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  isMain?: boolean;
+}
+
+const { post, isMain = false } = Astro.props;
+const date = new Date(post.data.pubDate).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric'
+});
+---
+
+<a 
+  href={`/blog/${post.slug}`}
+  class:list={[
+    'group block relative overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1',
+    isMain ? 'aspect-[16/9]' : 'aspect-[3/2]'
+  ]}
+>
+  <img 
+    src={post.data.image} 
+    alt={post.data.title}
+    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+  />
+  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
+    <div class="absolute bottom-0 p-6 text-white">
+      <div class="flex items-center gap-3 mb-3 text-purple-300">
+        <span class="text-sm">{post.data.category}</span>
+        <span class="w-1 h-1 rounded-full bg-purple-300"></span>
+        <span class="text-sm">{date}</span>
+      </div>
+      <h2 class:list={[
+        'font-bold mb-2 text-white/90 group-hover:text-white transition-colors',
+        isMain ? 'text-3xl' : 'text-xl'
+      ]}>
+        {post.data.title}
+      </h2>
+      <p class="text-white/70 text-sm line-clamp-2">
+        {post.data.description}
+      </p>
+    </div>
+  </div>
+</a>

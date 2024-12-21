@@ -1,0 +1,22 @@
+---
+import { extractHeadings } from '../../utils/markdown';
+import TOCButton from './TOCButton.astro';
+import TOCPanel from './TOCPanel.astro';
+
+interface Props {
+  content: string;
+}
+
+const { content } = Astro.props;
+const headings = extractHeadings(content);
+---
+
+<div class="fixed bottom-6 right-6 lg:hidden z-50">
+  <TOCButton />
+  <TOCPanel headings={headings} />
+</div>
+
+<script>
+  import { TOCManager } from '../../utils/toc';
+  new TOCManager();
+</script>

@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import FeaturedPost from './FeaturedPost.astro';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const [mainPost, ...otherPosts] = posts;
+---
+
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <div class="md:col-span-2 lg:col-span-2">
+    <FeaturedPost post={mainPost} isMain={true} />
+  </div>
+  {otherPosts.map(post => (
+    <div>
+      <FeaturedPost post={post} />
+    </div>
+  ))}
+</div>
